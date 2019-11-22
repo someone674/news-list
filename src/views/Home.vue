@@ -11,6 +11,9 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
+  mounted: function () {
+    // console.log(process.env.VUE_APP_BASEURL)
+  },
   components: {
     HelloWorld
   }
