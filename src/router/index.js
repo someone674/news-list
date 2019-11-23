@@ -26,7 +26,7 @@ const routes = [
       debugger
       next()
     },
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/newAbout.vue')
   }
 ]
 
