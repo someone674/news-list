@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -9,7 +10,8 @@ const routes = [{
   name: 'home',
   component: Home,
   meta: {
-    showHeader: true
+    showHeader: true,
+    requiresAuth: false
   }
 },
 {
@@ -20,7 +22,8 @@ const routes = [{
   // which is lazy-loaded when the route is visited.
   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   meta: {
-    showHeader: false
+    showHeader: false,
+    requiresAuth: true
   }
 },
 {
@@ -33,7 +36,22 @@ const routes = [{
   },
   component: () => import(/* webpackChunkName: "about" */ '../views/newAbout.vue'),
   meta: {
-    showHeader: false
+    showHeader: false,
+    requiresAuth: true
+  }
+},
+{
+  path: '/login',
+  name: 'login',
+  beforeEnter: (to, from, next) => {
+    console.log('login独享的前置守卫')
+    debugger
+    next()
+  },
+  component: () => import(/* webpackChunkName: "about" */ '../views/login.vue'),
+  meta: {
+    showHeader: false,
+    requiresAuth: false
   }
 }
 ]
@@ -46,12 +64,18 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   console.log('全局前置守卫')
+  debugger
   console.log(to)
   console.log(from)
-  console.log(next)
-  debugger
-  // 如果注释下面的方法，则导航不会正确跳转过去
-  next()
+  if (to.matched.some(r => r.meta.requiresAuth)) {
+    if (store.state.logined) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 router.afterEach((to, from) => {
