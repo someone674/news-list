@@ -31,7 +31,7 @@ const routes = [{
   name: 'newAbout',
   beforeEnter: (to, from, next) => {
     console.log('newAbout独享的前置守卫')
-    debugger
+    // debugger
     next()
   },
   component: () => import(/* webpackChunkName: "about" */ '../views/newAbout.vue'),
@@ -45,13 +45,22 @@ const routes = [{
   name: 'login',
   beforeEnter: (to, from, next) => {
     console.log('login独享的前置守卫')
-    debugger
+    // debugger
     next()
   },
   component: () => import(/* webpackChunkName: "about" */ '../views/login.vue'),
   meta: {
     showHeader: false,
     requiresAuth: false
+  }
+},
+{
+  path: '/newsList',
+  name: 'newsList',
+  component: () => import(/* webpackChunkName: "about" */ '../views/newsList.vue'),
+  meta: {
+    showHeader: true,
+    requiresAuth: true
   }
 }
 ]
@@ -64,7 +73,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   console.log('全局前置守卫')
-  debugger
+  // debugger
   console.log(to)
   console.log(from)
   if (to.matched.some(r => r.meta.requiresAuth)) {
@@ -82,7 +91,7 @@ router.afterEach((to, from) => {
   console.log('全局后置钩子')
   console.log(to)
   console.log(from)
-  debugger
+  // debugger
 })
 
 export default router
