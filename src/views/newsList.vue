@@ -63,10 +63,9 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
     .content-wapper{
-      height: 100px;
       display: flex;
       flex-direction: column;
       padding: 0 10px;
