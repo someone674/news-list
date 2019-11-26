@@ -62,6 +62,15 @@ const routes = [{
     showHeader: true,
     requiresAuth: true
   }
+},
+{
+  path: '/detail',
+  name: 'newsDetail',
+  component: () => import(/* webpackChunkName: "about" */ '../views/newsDetail.vue'),
+  meta: {
+    showHeader: true,
+    requiresAuth: true
+  }
 }
 ]
 
@@ -72,10 +81,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('全局前置守卫')
-  // debugger
-  console.log(to)
-  console.log(from)
+  // console.log('全局前置守卫')
+  // // debugger
+  // console.log(to)
+  // console.log(from)
   if (to.matched.some(r => r.meta.requiresAuth)) {
     if (store.state.logined) {
       next()
@@ -88,9 +97,9 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-  console.log('全局后置钩子')
-  console.log(to)
-  console.log(from)
+  // console.log('全局后置钩子')
+  // console.log(to)
+  // console.log(from)
   // debugger
 })
 
