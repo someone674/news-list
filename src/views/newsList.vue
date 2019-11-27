@@ -34,7 +34,13 @@ export default {
       })
     },
     goDetail (content) {
-      this.$router.push({ path: '/detail', query: { content: content } })
+      // this.$router.push({ path: '/detail', query: { content: content } })
+    //  实现新窗口打开
+      let routerUrl = this.$router.resolve({
+        path: '/detail',
+        query: { content: content }
+      })
+      window.open(routerUrl.href, '_blank')
     }
   }
 }

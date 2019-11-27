@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     login () {
+      localStorage.setItem('logined', true)
       this.$store.dispatch('login')
       this.$router.push({ path: '/' })
     }
