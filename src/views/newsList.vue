@@ -2,7 +2,7 @@
   <div class="news-wrapper">
     <div class="news-item" v-for="news in newsArray" :key="news.id">
       <div class="content-wapper">
-        <div class="title" @click="goDetail(news.content)"><span>{{ news.title }}</span></div>
+        <div class="title" @click="goDetail(news.id)"><span>{{ news.title }}</span></div>
         <div class="summary">{{ news.summary }}</div>
         <div class="author-info-wapper">
           <img :src="news.author_avatar" class="author-avatar"/>
@@ -10,7 +10,7 @@
           <span class="published-at">{{news.published_at}}</span>
         </div>
       </div>
-      <div class="img-wapper" @click="goDetail(news.content)"><img :src="news.cover" class="img-avatar" /></div>
+      <div class="img-wapper" @click="goDetail(news.id)"><img :src="news.cover" class="img-avatar" /></div>
     </div>
   </div>
 </template>
@@ -29,16 +29,16 @@ export default {
   },
   methods: {
     getData () {
-      this.$get('https://unidemo.dcloud.net.cn/api/news').then((resp) => {
+      this.$get(this.$api.newsList).then((resp) => {
         this.newsArray = resp
       })
     },
-    goDetail (content) {
+    goDetail (id) {
       // this.$router.push({ path: '/detail', query: { content: content } })
     //  实现新窗口打开
       let routerUrl = this.$router.resolve({
         path: '/detail',
-        query: { content: content }
+        query: { id: id }
       })
       window.open(routerUrl.href, '_blank')
     }
