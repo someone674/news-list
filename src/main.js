@@ -2,15 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { get, post, put, patch } from './util/http.js'
+import http from './util/http.js'
 import api from './util/api.js'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-Vue.prototype.$get = get
-Vue.prototype.$post = post
-Vue.prototype.$put = put
-Vue.prototype.$patch = patch
+Vue.prototype.$http = http
 Vue.prototype.$api = api
 
 new Vue({

@@ -29,8 +29,9 @@ export default {
   },
   methods: {
     getData () {
-      this.$get(this.$api.newsList).then((resp) => {
-        this.newsArray = resp
+      this.$http(this.$api.newsList).then(data => {
+        console.log(data)
+        this.newsArray = data
       })
     },
     goDetail (id) {
@@ -54,11 +55,14 @@ export default {
   justify-content: @content;
   align-items: center;
 }
+.baseWidth (@d: 550px) {
+  width: @d;
+}
 
 .news-wrapper {
   .flex-display;
   .news-item {
-    width: 630px;
+    width: 750px;
     margin: 5px 0;
     border-bottom: 1px solid #f0f0f0;
     padding: 10px 10px;
@@ -70,7 +74,7 @@ export default {
       flex-direction: column;
       padding: 0 10px;
       .title {
-        width: 440px;
+        .baseWidth;
         font-size: 18px;
         font-weight: 700;
         line-height: 1.5;
@@ -83,7 +87,7 @@ export default {
         border-bottom: #000000 2px solid;
       }
       .summary {
-        width: 440px;
+        .baseWidth;
         font-size: 14px;
         font-weight: 300;
         color: #878787;
@@ -92,7 +96,7 @@ export default {
         overflow: hidden;
       }
       .author-info-wapper{
-        width: 440px;
+        .baseWidth;
         max-height: 40px;
         font-size: 14px;
         font-weight: 500;

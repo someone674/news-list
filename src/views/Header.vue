@@ -1,18 +1,107 @@
 <template>
   <div id="nav">
-    <router-link to="/">首页</router-link>
+    <div class="nav-img">
+      <img src="../assets/logo.png" class="logo_icon">
+    </div>
+    <div class="nav-menu">
+      <el-menu mode="horizontal" class="menu">
+        <el-menu-item index=""><a :href="this.url">首页</a></el-menu-item>
+      </el-menu>
+      <el-autocomplete
+        class="inline-input"
+        v-model="inputValue"
+        :fetch-suggestions="querySearch"
+        placeholder="请输入内容"
+        suffix-icon="el-icon-search"
+        @select="handleSelect"
+        @keyup.enter.native="sendValue"
+      ></el-autocomplete>
+    </div>
+    <div class="nav-login">
+      <el-row>
+        <el-button type="primary" round>登录</el-button>
+        <el-button type="danger" round>注册</el-button>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+      url: process.env.VUE_APP_BASEURL,
+      restaurants: [],
+      inputValue: '',
+      timeout: null
+    }
+  },
+  mounted () {
+    this.loadHot()
+  },
+  methods: {
+    loadHot () {
+      this.$http(this.$api.hotList).then((data) => {
+        this.restaurants = data
+      })
+    },
+    querySearch (queryString, cb) {
+      var restaurants = this.restaurants
+      var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
+    createStateFilter (queryString) {
+      return (inputValue) => {
+        return (inputValue.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    handleSelect (item) {
+      console.log(item)
+      console.log(JSON.stringify(item))
+      console.log(item.value)
+    },
+    sendValue () {
+      console.log('ddd')
+      console.log(this.inputValue)
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
+  .flex-display (@dir: column, @content: center) {
+    display: flex;
+    flex-direction: @dir;
+    justify-content: @content;
+    align-items: center;
+  }
+  .baseWidth(@width: 500px) {
+    width: @width;
+  }
   #nav {
-    padding: 30px;
+    border-bottom: 1px solid #e6e6e6;
+    .flex-display(row, center);
+    .nav-img {
+      .baseWidth;
+      padding-right: 50px;
+      .logo_icon {
+        width: 80px;
+        float: right;
+      }
+    }
+    .nav-menu {
+      width: 750px;
+      .flex-display(row, space-between);
+      .menu {
+        border-bottom: 0;
+      }
+    }
+    .nav-login {
+      .baseWidth;
+      padding-left: 50px;
+    }
     a {
       font-weight: bold;
       color: #2c3e50;
