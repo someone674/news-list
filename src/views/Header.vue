@@ -18,9 +18,12 @@
       ></el-autocomplete>
     </div>
     <div class="nav-login">
-      <el-row>
-        <el-button type="primary" round>登录</el-button>
-        <el-button type="danger" round>注册</el-button>
+      <el-row v-if="logined">
+        <el-link type="info" @click="lougout">退出登录</el-link>
+      </el-row>
+      <el-row v-else>
+        <el-button type="primary" round @click="goLogin(true)">登录</el-button>
+        <el-button type="danger" round @click="goLogin(false)">注册</el-button>
       </el-row>
     </div>
   </div>
@@ -39,6 +42,11 @@ export default {
   },
   mounted () {
     this.loadHot()
+  },
+  computed: {
+    logined () {
+      return localStorage.getItem('logined')
+    }
   },
   methods: {
     loadHot () {
@@ -65,18 +73,18 @@ export default {
     sendValue () {
       console.log('ddd')
       console.log(this.inputValue)
+    },
+    lougout () {
+      localStorage.removeItem('logined')
+    },
+    goLogin (type) {
+      this.$router.push({ path: '/login', query: { type: type } })
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-  .flex-display (@dir: column, @content: center) {
-    display: flex;
-    flex-direction: @dir;
-    justify-content: @content;
-    align-items: center;
-  }
   .baseWidth(@width: 500px) {
     width: @width;
   }

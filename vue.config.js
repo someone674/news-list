@@ -1,3 +1,4 @@
+const path = require('path')
 // vue.config.js
 // 官方文档
 // https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE
@@ -14,6 +15,29 @@ module.exports = {
   publicPath: process.env.VUE_APP_BASEURL,
   devServer: {
     port: process.env.VUE_APP_PORT
+  },
+  // 配置全局less变量
+  chainWebpack: config => {
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
+  },
+  css: {
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true
+      }
+    }
   }
 
+}
+
+function addStyleResource (rule) {
+  rule.use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        // 需要全局导入的less路径，自己修改
+        path.resolve(__dirname, './src/assets/styles/global.less')
+      ]
+    })
 }

@@ -1,5 +1,6 @@
 <template>
-  <div class="news-wrapper">
+  <div class="news-wrapper" v-loading="loading" element-loading-text="拼命加载中"
+       element-loading-spinner="el-icon-loading">
     <div class="news-item" v-for="news in newsArray" :key="news.id">
       <div class="content-wapper">
         <div class="title" @click="goDetail(news.id)"><span>{{ news.title }}</span></div>
@@ -21,18 +22,22 @@ export default {
   name: 'newsList',
   data () {
     return {
-      newsArray: []
+      newsArray: [],
+      loading: true
     }
   },
   created () {
+  },
+  mounted () {
     this.getData()
   },
   methods: {
     getData () {
-      this.$http(this.$api.newsList).then(data => {
+      this.$http.get(this.$api.newsList).then(data => {
         console.log(data)
         this.newsArray = data
       })
+      this.loading = false
     },
     goDetail (id) {
       // this.$router.push({ path: '/detail', query: { content: content } })
@@ -49,12 +54,6 @@ export default {
 
 <style scoped lang="less">
 
-.flex-display (@dir: column, @content: center) {
-  display: flex;
-  flex-direction: @dir;
-  justify-content: @content;
-  align-items: center;
-}
 .baseWidth (@d: 550px) {
   width: @d;
 }
