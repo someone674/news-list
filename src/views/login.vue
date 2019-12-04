@@ -1,6 +1,6 @@
 <template>
   <div class="login-backend">
-    <div class="login-wrapper" v-if="this.toLogin">
+    <div class="login-wrapper" v-if="toLogin">
       <el-input class="text-input"
         placeholder="手机号或邮箱"
         v-model="username"
@@ -62,7 +62,7 @@ export default {
   name: 'login',
   data () {
     return {
-      toLogin: true,
+      toLogin: false,
       username: '',
       password: '',
       nickname: '',
@@ -70,21 +70,16 @@ export default {
       verifiCode: ''
     }
   },
-  mounted: () => {
-    console.log('dd')
+  mounted () {
+    this.toLogin = this.$route.query.type
   },
-  watch: {
-    toLogin () {
-      return this.$route.query.type
-    }
+  updated () {
   },
   computed: {
-    logined () {
-      return this.$store.getters.login
-    }
   },
   methods: {
     login () {
+      // 这里是需要请求后台进行验证，然后根据结果是否登陆成功。
       localStorage.setItem('logined', true)
       this.$store.dispatch('login')
       this.$router.push({ path: '/' })

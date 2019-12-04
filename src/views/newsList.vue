@@ -40,13 +40,13 @@ export default {
       this.loading = false
     },
     goDetail (id) {
-      // this.$router.push({ path: '/detail', query: { content: content } })
+      this.$router.push({ path: '/detail', query: { id: id } })
     //  实现新窗口打开
-      let routerUrl = this.$router.resolve({
-        path: '/detail',
-        query: { id: id }
-      })
-      window.open(routerUrl.href, '_blank')
+    //   let routerUrl = this.$router.resolve({
+    //     path: '/detail',
+    //     query: { id: id }
+    //   })
+    //   window.open(routerUrl.href, '_blank')
     }
   }
 }

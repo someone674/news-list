@@ -15,11 +15,17 @@ export default new Vuex.Store({
   mutations: {
     login (state) {
       state.logined = true
+    },
+    logout (state) {
+      state.logined = false
     }
   },
   actions: {
     login ({ commit }) {
       commit('login')
+    },
+    logout ({ commit }) {
+      commit('logout')
     }
   },
   modules: {

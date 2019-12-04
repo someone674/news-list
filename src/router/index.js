@@ -48,9 +48,12 @@ router.beforeEach((to, from, next) => {
   // console.log('全局前置守卫')
   // // debugger
   // console.log(to)
+  // console.log(to.path)
   // console.log(from)
   let loginStatus = localStorage.getItem('logined')
-  if (to.matched.some(r => r.meta.requiresAuth)) {
+  if (to.path === '/login' && loginStatus) {
+    next('/')
+  } else if (to.matched.some(r => r.meta.requiresAuth)) {
     if (loginStatus) {
       next()
     } else {

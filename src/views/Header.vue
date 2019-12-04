@@ -42,10 +42,24 @@ export default {
   },
   mounted () {
     this.loadHot()
+    console.log('导航条挂载了')
+  },
+  updated () {
+    console.log('导航条更新了')
   },
   computed: {
-    logined () {
-      return localStorage.getItem('logined')
+    logined: {
+      get: () => {
+        return this.$store.getters.login
+      },
+      set: () => {
+        return !!localStorage.getItem('logined')
+      }
+    }
+  },
+  watch: {
+    logined: function (oldValue, newValue) {
+      return newValue
     }
   },
   methods: {
@@ -74,11 +88,21 @@ export default {
       console.log('ddd')
       console.log(this.inputValue)
     },
+    // 退出登录
     lougout () {
       localStorage.removeItem('logined')
+      this.$store.dispatch('logout')
     },
+
+    // 去登录页面
     goLogin (type) {
-      this.$router.push({ path: '/login', query: { type: type } })
+      this.$router.push({ path: '/login', query: { type: type } }).catch(() => {
+        this.$notify({
+          title: '警告',
+          message: '您已登陆',
+          type: 'warning'
+        })
+      })
     }
   }
 }
