@@ -18,7 +18,7 @@
       ></el-autocomplete>
     </div>
     <div class="nav-login">
-      <el-row v-if="logined">
+      <el-row v-if="this.$store.getters.login">
         <el-link type="info" @click="lougout">退出登录</el-link>
       </el-row>
       <el-row v-else>
@@ -48,13 +48,8 @@ export default {
     console.log('导航条更新了')
   },
   computed: {
-    logined: {
-      get: () => {
-        return this.$store.getters.login
-      },
-      set: () => {
-        return !!localStorage.getItem('logined')
-      }
+    logined () {
+      return this.$store.getters.login
     }
   },
   watch: {
@@ -90,7 +85,6 @@ export default {
     },
     // 退出登录
     lougout () {
-      localStorage.removeItem('logined')
       this.$store.dispatch('logout')
     },
 

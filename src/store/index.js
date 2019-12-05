@@ -9,15 +9,20 @@ export default new Vuex.Store({
   },
   getters: {
     login: state => {
+      if (!state.logined) {
+        return sessionStorage.getItem('logined')
+      }
       return state.logined
     }
   },
   mutations: {
     login (state) {
       state.logined = true
+      sessionStorage.setItem('logined', true)
     },
     logout (state) {
       state.logined = false
+      sessionStorage.removeItem('logined')
     }
   },
   actions: {

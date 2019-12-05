@@ -80,7 +80,6 @@ export default {
   methods: {
     login () {
       // 这里是需要请求后台进行验证，然后根据结果是否登陆成功。
-      localStorage.setItem('logined', true)
       this.$store.dispatch('login')
       this.$router.push({ path: '/' })
     },
