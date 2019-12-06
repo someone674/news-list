@@ -18,7 +18,7 @@
       ></el-autocomplete>
     </div>
     <div class="nav-login">
-      <el-row v-if="this.$store.getters.login">
+      <el-row v-if="logined">
         <el-link type="info" @click="lougout">退出登录</el-link>
       </el-row>
       <el-row v-else>
@@ -30,6 +30,9 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Header',
   data () {
@@ -43,19 +46,17 @@ export default {
   mounted () {
     this.loadHot()
     console.log('导航条挂载了')
+    console.log(JSON.stringify(this.$store.getters['login/login']))
   },
   updated () {
     console.log('导航条更新了')
   },
   computed: {
-    logined () {
-      return this.$store.getters.login
-    }
+    ...mapGetters({
+      logined: 'login/login'
+    })
   },
   watch: {
-    logined: function (oldValue, newValue) {
-      return newValue
-    }
   },
   methods: {
     loadHot () {
@@ -85,7 +86,7 @@ export default {
     },
     // 退出登录
     lougout () {
-      this.$store.dispatch('logout')
+      this.$store.dispatch('login/logout')
     },
 
     // 去登录页面

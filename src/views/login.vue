@@ -80,7 +80,7 @@ export default {
   methods: {
     login () {
       // 这里是需要请求后台进行验证，然后根据结果是否登陆成功。
-      this.$store.dispatch('login')
+      this.$store.dispatch('login/login')
       this.$router.push({ path: '/' })
     },
     changeType () {

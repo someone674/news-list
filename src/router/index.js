@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import newsList from '../views/newsList'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -50,7 +51,7 @@ router.beforeEach((to, from, next) => {
   // console.log(to)
   // console.log(to.path)
   // console.log(from)
-  let loginStatus = localStorage.getItem('logined')
+  let loginStatus = store.getters['login/login']
   if (to.path === '/login' && loginStatus) {
     next('/')
   } else if (to.matched.some(r => r.meta.requiresAuth)) {

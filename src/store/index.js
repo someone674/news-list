@@ -1,39 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import login from './modules/login'
+import myPlugin from '../plugins/myPlugin'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    logined: false
-  },
-  getters: {
-    login: state => {
-      if (!state.logined) {
-        return sessionStorage.getItem('logined')
-      }
-      return state.logined
-    }
-  },
-  mutations: {
-    login (state) {
-      state.logined = true
-      sessionStorage.setItem('logined', true)
-    },
-    logout (state) {
-      state.logined = false
-      sessionStorage.removeItem('logined')
-    }
-  },
-  actions: {
-    login ({ commit }) {
-      commit('login')
-    },
-    logout ({ commit }) {
-      commit('logout')
-    }
-  },
   modules: {
+    login
+  },
+  // 发布环境以外开启严格模式
+  strict: process.env.NODE_ENV !== 'production',
 
-  }
+  // 添加插件
+  plugins: [
+    myPlugin
+  ]
 })

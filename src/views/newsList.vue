@@ -41,11 +41,11 @@ export default {
     },
     goDetail (id) {
       this.$router.push({ path: '/detail', query: { id: id } }).catch(() => {
-        this.$notify({
-          title: '警告',
-          message: '访问错误',
-          type: 'warning'
-        })
+        // this.$notify({
+        //   title: '警告',
+        //   message: '访问错误',
+        //   type: 'warning'
+        // })
       })
     //  实现新窗口打开
     //   let routerUrl = this.$router.resolve({
